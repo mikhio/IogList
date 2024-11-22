@@ -1,9 +1,11 @@
-#include <stdlib.h>
+#include "iog_list.h"
+#include "iog_list_dumper.h"
 
 #include "iog_assert.h"
-#include "iog_list.h"
 #include "cli_colors.h"
 #include "iog_memlib.h"
+
+#include <stdlib.h>
 
 //--------------------- PUBLIC FUNCTIONS --------------------------------------------
 
@@ -66,6 +68,20 @@ int iog_ListVerify (const IogList_t *list) {
 
   if (list->data == NULL)
     return ERR_DATA_NULLPTR;
+
+  return OK;
+}
+
+/**
+ * Make list dump.
+ * @param[in] list  pointer to list
+ * @param[in] debug structure with debug info 
+ * @return Error code (if ok return IogReturnCode.OK)
+ */
+int iog_ListDump (const IogList_t *list, const IogDebugInfo_t debug) {
+  IOG_ASSERT(list);
+
+  iog_ListGraphDump(list, debug);
 
   return OK;
 }

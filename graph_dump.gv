@@ -1,0 +1,38 @@
+digraph G {
+list [
+shape=record,
+label="{list | {size | 0} | {capacity | 4}}",
+fillcolor=lightgrey,
+color=black,
+style="filled",
+];
+elem_0 [
+  shape=record,
+  label="{elem_0 | {{data | 0} | {<next_0> next | 0} | {<prev_0> prev | 0}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_1 [
+  shape=record,
+  label="{elem_1 | {{data | 0} | {<next_1> next | 0} | {<prev_1> prev | 0}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_2 [
+  shape=record,
+  label="{elem_2 | {{data | 0} | {<next_2> next | 0} | {<prev_2> prev | 0}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_3 [
+  shape=record,
+  label="{elem_3 | {{data | 0} | {<next_3> next | 0} | {<prev_3> prev | 0}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+
+}

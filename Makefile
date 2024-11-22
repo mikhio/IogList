@@ -1,4 +1,4 @@
-CXX := clang++
+CXX := clang++ -std=c++17
 
 SRC_PATH     := ./src
 INCLUDE_PATH := ./include
@@ -9,7 +9,7 @@ CCH_PATH     := ./cpp_cache
 SOURCES := $(wildcard $(SRC_PATH)/*.cpp) main.cpp
 OBJECTS := $(addprefix $(CCH_PATH)/, $(patsubst %.cpp, %.o, $(SOURCES)))
 
-CXX_FLAGS := -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations \
+CXX_FLAGS := -D _DEBUG -ggdb3 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations \
    -Wc++14-compat -Wmissing-declarations -Wcast-qual -Wchar-subscripts                             \
    -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wempty-body -Wfloat-equal           \
    -Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Winline                   \
@@ -34,7 +34,7 @@ $(CCH_PATH)/$(SRC_PATH)/%.o: $(SRC_PATH)/%.cpp Makefile
 
 $(CCH_PATH)/main.o: main.cpp Makefile
 	@mkdir -p $(@D)
-	$(CXX) -I$(INCLUDE_PATH) -c $< -o $@ 
+	$(CXX) -I$(INCLUDE_PATH)  -c $< -o $@ 
 
 # Simplification
 .PHONY: build

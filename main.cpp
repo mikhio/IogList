@@ -11,6 +11,8 @@ int main(const int argc, const char *argv[]) {
 
   iog_ListInit(&list);
 
+  IOG_LIST_DUMP(&list);
+
   //iog_ListInsertEnd(&list, 10.1);
   //iog_ListInsertEnd(&list, 12.1);
   //iog_ListInsertEnd(&list, 15.1);
