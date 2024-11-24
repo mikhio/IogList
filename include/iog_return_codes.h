@@ -12,7 +12,7 @@ enum IogReturnCode {
   ERR_ALREADY_INITIALIZED    = 1,
   ERR_ISNT_INITIALIZED       = 2,
 
-  ERR_CANT_ALLOCATE_DATA     = 3,
+  ERR_CANT_ALLOCATE          = 3,
   ERR_CANT_FREE_DATA         = 4,
 
   ERR_UNDERFLOW              = 5,

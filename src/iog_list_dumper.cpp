@@ -19,50 +19,68 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
   
   fprintf(dump_file, "digraph G {\n");
   fprintf(dump_file,
+      "debug_info [\n"
+      "shape=record,\n"
+      "label=\"{debug info | { {list name | file name | function name | line number} | {%s | %s | %s | %d} }}\",\n"
+      "fillcolor=white,\n"
+      "color=grey,\n"
+      "style=\"filled\",\n"
+      "];\n",
+      debug.name,
+      debug.file_name,
+      debug.func_name,
+      debug.line_num
+  );
+  fprintf(dump_file,
       "list [\n"
       "shape=record,\n"
-      "label=\"{list | {size | %lu} | {capacity | %lu}}\",\n"
-      "fillcolor=lightgrey,\n"
-      "color=black,\n"
+      "label=\"{list | { {size | capacity | first_elem | last_elem} | {%lu | %lu | %d | %d} }}\",\n"
+      "fillcolor=white,\n"
+      "color=grey,\n"
       "style=\"filled\",\n"
       "];\n",
       list->size,
-      list->capacity
+      list->capacity,
+      list->first_elem,
+      list->last_elem
   );
 
   for (int i = 0; i < list->capacity; i++) {
     fprintf(dump_file,
       "elem_%d [\n"
       "  shape=record,\n"
-      "  label=\"{elem_%d | {{data | %lg} | {<next_%d> next | %d} | {<prev_%d> prev | %d}}}\",\n"
-      "  fillcolor=lightgrey,\n"
+      "  label=\"{elem_%d | {{data | %lg} | {next | %d} | {prev | %d}}}\",\n"
+      "  fillcolor=%s,\n"
       "  color=black,\n"
       "  style=\"filled\"\n"
       "];\n",
       i,
       i,
       list->data[i],
-      i,
       list->next[i],
-      i,
-      list->prev[i]
+      list->prev[i],
+      (i < list->size) ? "lightgrey" : "white"
     );
   }
 
   fprintf(dump_file, "\n");
 
-  for (int i = 0; i < list->size; i++) {
-    fprintf(dump_file, 
-        "next_%d -> elem_%d [color=black];\n"
-        "prev_%d -> elem_%d [color=blue];\n",
-        i, list->next[i], i, list->prev[i]
-    );
+  if (list->size > 1) {
+    for (int i = 0; i < list->size; i++) {
+      fprintf(dump_file, 
+          "elem_%d -> elem_%d [color=black, line=stigh];\n"
+          "elem_%d -> elem_%d [color=blue];\n",
+          i, list->next[i], i, list->prev[i]
+      );
+    }
   }
 
 
   fprintf(dump_file, "}\n");
 
   fclose(dump_file);
+
+  system("dot -Tpng graph_dump.gv -o dump.png");
 
   return OK;
 }

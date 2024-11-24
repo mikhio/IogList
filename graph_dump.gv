@@ -1,38 +1,147 @@
 digraph G {
+debug_info [
+shape=record,
+label="{debug info | { {list name | file name | function name | line number} | {&list | main.cpp | int main(const int, const char **) | 27} }}",
+fillcolor=white,
+color=grey,
+style="filled",
+];
 list [
 shape=record,
-label="{list | {size | 0} | {capacity | 4}}",
-fillcolor=lightgrey,
-color=black,
+label="{list | { {size | capacity | first_elem | last_elem} | {9 | 16 | 7 | 4} }}",
+fillcolor=white,
+color=grey,
 style="filled",
 ];
 elem_0 [
   shape=record,
-  label="{elem_0 | {{data | 0} | {<next_0> next | 0} | {<prev_0> prev | 0}}}",
+  label="{elem_0 | {{data | 10.1} | {next | 1} | {prev | 7}}}",
   fillcolor=lightgrey,
   color=black,
   style="filled"
 ];
 elem_1 [
   shape=record,
-  label="{elem_1 | {{data | 0} | {<next_1> next | 0} | {<prev_1> prev | 0}}}",
+  label="{elem_1 | {{data | 12.1} | {next | 8} | {prev | 0}}}",
   fillcolor=lightgrey,
   color=black,
   style="filled"
 ];
 elem_2 [
   shape=record,
-  label="{elem_2 | {{data | 0} | {<next_2> next | 0} | {<prev_2> prev | 0}}}",
+  label="{elem_2 | {{data | 15.1} | {next | 3} | {prev | 5}}}",
   fillcolor=lightgrey,
   color=black,
   style="filled"
 ];
 elem_3 [
   shape=record,
-  label="{elem_3 | {{data | 0} | {<next_3> next | 0} | {<prev_3> prev | 0}}}",
+  label="{elem_3 | {{data | 19.1} | {next | 4} | {prev | 2}}}",
   fillcolor=lightgrey,
   color=black,
   style="filled"
 ];
+elem_4 [
+  shape=record,
+  label="{elem_4 | {{data | 19.1} | {next | 7} | {prev | 3}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_5 [
+  shape=record,
+  label="{elem_5 | {{data | 20} | {next | 2} | {prev | 6}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_6 [
+  shape=record,
+  label="{elem_6 | {{data | 30} | {next | 5} | {prev | 8}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_7 [
+  shape=record,
+  label="{elem_7 | {{data | 10} | {next | 0} | {prev | 4}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_8 [
+  shape=record,
+  label="{elem_8 | {{data | 10} | {next | 6} | {prev | 1}}}",
+  fillcolor=lightgrey,
+  color=black,
+  style="filled"
+];
+elem_9 [
+  shape=record,
+  label="{elem_9 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_10 [
+  shape=record,
+  label="{elem_10 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_11 [
+  shape=record,
+  label="{elem_11 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_12 [
+  shape=record,
+  label="{elem_12 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_13 [
+  shape=record,
+  label="{elem_13 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_14 [
+  shape=record,
+  label="{elem_14 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_15 [
+  shape=record,
+  label="{elem_15 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
 
+elem_0 -> elem_1 [color=black, line=stigh];
+elem_0 -> elem_7 [color=blue];
+elem_1 -> elem_8 [color=black, line=stigh];
+elem_1 -> elem_0 [color=blue];
+elem_2 -> elem_3 [color=black, line=stigh];
+elem_2 -> elem_5 [color=blue];
+elem_3 -> elem_4 [color=black, line=stigh];
+elem_3 -> elem_2 [color=blue];
+elem_4 -> elem_7 [color=black, line=stigh];
+elem_4 -> elem_3 [color=blue];
+elem_5 -> elem_2 [color=black, line=stigh];
+elem_5 -> elem_6 [color=blue];
+elem_6 -> elem_5 [color=black, line=stigh];
+elem_6 -> elem_8 [color=blue];
+elem_7 -> elem_0 [color=black, line=stigh];
+elem_7 -> elem_4 [color=blue];
+elem_8 -> elem_6 [color=black, line=stigh];
+elem_8 -> elem_1 [color=blue];
 }

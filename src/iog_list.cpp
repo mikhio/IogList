@@ -18,10 +18,12 @@ int iog_ListInit (IogList_t *list) {
 
   if (allocate_list(list, INIT_LIST_CAPACITY) != OK) {
     fprintf(stderr, RED("InitError: can't allocate list\n"));
-    return ERR_CANT_ALLOCATE_DATA;
+    return ERR_CANT_ALLOCATE;
   }
 
   list->size = 0;
+  list->first_elem = 0;
+  list->last_elem = 0;
 
   IOG_ASSERT(iog_ListVerify(list) == OK);
 
@@ -43,6 +45,9 @@ int iog_ListDestroy (IogList_t *list) {
   list->data = NULL;
   list->next = NULL;
   list->prev = NULL;
+
+  list->first_elem = 0;
+  list->last_elem = 0;
   
   list->size = 0;
   list->capacity = 0;
@@ -86,6 +91,88 @@ int iog_ListDump (const IogList_t *list, const IogDebugInfo_t debug) {
   return OK;
 }
 
+int iog_ListInsertAfter (IogList_t *list, IogListId_t elem_id, IogListData_t value) {
+  IOG_ASSERT(iog_ListVerify(list) == OK);
+  IOG_ASSERT(elem_id >= 0);
+  IOG_ASSERT(elem_id <= list->size);
+  IOG_ASSERT((elem_id == list->size) <= (list->size == 0))
+
+
+  if (list->size == list->capacity) {
+    int err = allocate_more(list);
+
+    if (err != OK)  {
+      fprintf(stderr, RED("InsertError: size > capacity and can't allocate more memory\n"));
+      return ERR_CANT_ALLOCATE;
+    }
+  }
+
+  list->data[list->size] = value;
+  list->next[list->size] = list->next[elem_id];
+  list->prev[list->size] = elem_id;
+
+  list->next[elem_id] = list->size;
+  list->prev[list->next[list->size]] = list->size;
+
+  if (elem_id == list->last_elem) {
+    list->last_elem = list->size;
+  }
+
+  list->size++;
+
+  fprintf(stderr, "size: %lu, cap: %lu\n", list->size, list->capacity);
+
+  return OK;
+}
+
+int iog_ListInsertBefore (IogList_t *list, IogListId_t elem_id, IogListData_t value) {
+  IOG_ASSERT(iog_ListVerify(list) == OK);
+  IOG_ASSERT(elem_id >= 0);
+  IOG_ASSERT(elem_id <= list->size);
+
+  if (list->size == list->capacity) {
+    int err = allocate_more(list);
+
+    if (err != OK)  {
+      fprintf(stderr, RED("InsertError: size > capacity and can't allocate more memory\n"));
+      return ERR_CANT_ALLOCATE;
+    }
+  }
+
+  list->data[list->size] = value;
+  list->next[list->size] = elem_id;
+  list->prev[list->size] = list->prev[elem_id];
+
+  list->prev[elem_id] = list->size;
+  list->next[list->prev[list->size]] = list->size;
+
+  if (elem_id == list->first_elem) {
+    list->first_elem = list->size;
+  }
+
+  list->size++;
+
+  fprintf(stderr, "size: %lu, cap: %lu\n", list->size, list->capacity);
+
+  return OK;
+}
+
+int iog_ListInsertStart (IogList_t *list, IogListData_t value) {
+  IOG_ASSERT(iog_ListVerify(list) == OK);
+
+  iog_ListInsertBefore(list, list->first_elem, value);
+
+  return OK;
+}
+
+int iog_ListInsertEnd (IogList_t *list, IogListData_t value) {
+  IOG_ASSERT(iog_ListVerify(list) == OK);
+
+  iog_ListInsertAfter(list, list->last_elem, value);
+
+  return OK;
+}
+
 
 //--------------------- PRIVATE FUNCTIONS --------------------------------------------
 
@@ -124,13 +211,13 @@ static int allocate_list (IogList_t *list, size_t new_capacity) {
   );
 
   if (tmp_data == NULL)
-    return ERR_CANT_ALLOCATE_DATA;
+    return ERR_CANT_ALLOCATE;
 
   if (tmp_next == NULL)
-    return ERR_CANT_ALLOCATE_DATA;
+    return ERR_CANT_ALLOCATE;
 
   if (tmp_prev == NULL)
-    return ERR_CANT_ALLOCATE_DATA;
+    return ERR_CANT_ALLOCATE;
 
 
   list->data = tmp_data;
@@ -151,7 +238,7 @@ static int allocate_more (IogList_t *list) {
   IOG_ASSERT(iog_ListVerify(list) == OK);
 
   if (allocate_list(list, list->capacity * 2) != OK)
-    return ERR_CANT_ALLOCATE_DATA;
+    return ERR_CANT_ALLOCATE;
 
   IOG_ASSERT(iog_ListVerify(list) == OK);
 
