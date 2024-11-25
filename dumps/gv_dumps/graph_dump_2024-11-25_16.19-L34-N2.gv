@@ -1,42 +1,42 @@
 digraph G {
 debug_info [
 shape=record,
-label="{debug info | { {list name | file name | function name | line number} | {&list | main.cpp | int main(const int, const char **) | 30} }}",
+label="{debug info | { {list name | file name | function name | line number | datetime} | {&list | main.cpp | int main(const int, const char **) | 34 | 2024-11-25_16.19} }}",
 fillcolor=white,
 color=grey,
 style="filled",
 ];
 list [
 shape=record,
-label="{list | { {size | capacity | first_elem | last_elem} | {4 | 8 | 1 | 0} }}",
+label="{list | { {size | capacity | first_elem | last_elem} | {3 | 8 | 1 | 2} }}",
 fillcolor=white,
 color=grey,
 style="filled",
 ];
 elem_0 [
   shape=record,
-  label="{elem_0 | {{data | 14.1} | {next | 1} | {prev | 3}}}",
+  label="{elem_0 | {{data | 13.1} | {next | 2} | {prev | 1}}}",
   fillcolor=white,
   color=black,
   style="filled"
 ];
 elem_1 [
   shape=record,
-  label="{elem_1 | {{data | 11.1} | {next | 2} | {prev | 0}}}",
+  label="{elem_1 | {{data | 11.1} | {next | 0} | {prev | 2}}}",
   fillcolor=white,
   color=black,
   style="filled"
 ];
 elem_2 [
   shape=record,
-  label="{elem_2 | {{data | 12.1} | {next | 3} | {prev | 1}}}",
+  label="{elem_2 | {{data | 14.1} | {next | 1} | {prev | 0}}}",
   fillcolor=white,
   color=black,
   style="filled"
 ];
 elem_3 [
   shape=record,
-  label="{elem_3 | {{data | 13.1} | {next | 0} | {prev | 2}}}",
+  label="{elem_3 | {{data | 0} | {next | 0} | {prev | 0}}}",
   fillcolor=white,
   color=black,
   style="filled"
@@ -70,20 +70,16 @@ elem_7 [
   style="filled"
 ];
 
-elem_1 -> elem_2 [color=black, line=stigh];
-elem_1 -> elem_0 [color=blue];
+elem_1 -> elem_0 [color=black, line=stigh];
+elem_1 -> elem_2 [color=blue];
 elem_1 [fillcolor=lightgrey];
 
-elem_2 -> elem_3 [color=black, line=stigh];
-elem_2 -> elem_1 [color=blue];
-elem_2 [fillcolor=lightgrey];
-
-elem_3 -> elem_0 [color=black, line=stigh];
-elem_3 -> elem_2 [color=blue];
-elem_3 [fillcolor=lightgrey];
-
-elem_0 -> elem_1 [color=black, line=stigh];
-elem_0 -> elem_3 [color=blue];
+elem_0 -> elem_2 [color=black, line=stigh];
+elem_0 -> elem_1 [color=blue];
 elem_0 [fillcolor=lightgrey];
+
+elem_2 -> elem_1 [color=black, line=stigh];
+elem_2 -> elem_0 [color=blue];
+elem_2 [fillcolor=lightgrey];
 
 }

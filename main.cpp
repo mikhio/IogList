@@ -7,6 +7,8 @@
 #include "iog_assert.h"
 
 int main(const int argc, const char *argv[]) {
+  size_t dumps_count = 0;
+
   IogList_t list = {};
 
   iog_ListInit(&list);
@@ -14,8 +16,8 @@ int main(const int argc, const char *argv[]) {
   iog_ListInsertEnd(&list, 10.1);
   iog_ListInsertEnd(&list, 11.1);
   iog_ListInsertEnd(&list, 12.1);
-  iog_ListInsertEnd(&list, 13.1);
   iog_ListInsertEnd(&list, 14.1);
+  iog_ListInsertAfter(&list, 1, 13.1);
 
   IogListData_t value = 0;
   iog_ListGetDataLast(&list, &value);
@@ -24,10 +26,12 @@ int main(const int argc, const char *argv[]) {
   iog_ListDeleteFirst(&list);
   //iog_ListDeleteFirst(&list);
   //iog_ListDeleteLast(&list);
-  //iog_ListDeleteById(&list, 2);
+  iog_ListDeleteById(&list, 2);
 
   
-  IOG_LIST_DUMP(&list);
+  IOG_LIST_DUMP(&list, &dumps_count);
+  IOG_LIST_DUMP(&list, &dumps_count);
+  IOG_LIST_DUMP(&list, &dumps_count);
 
   iog_ListDestroy(&list);
 

@@ -6,11 +6,40 @@
 #include "cli_colors.h"
 
 #include <stdio.h>
+#include <time.h>
+#include <string.h>
 
-int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
+
+int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug, size_t *dumps_count) {
   IOG_ASSERT(list);
 
-  FILE *dump_file = fopen("graph_dump.gv", "wb");
+  char gv_filename[MAX_FILENAME_LEN] = "";
+  char png_filename[MAX_FILENAME_LEN] = "";
+
+  char datetime_str[MAX_DATETIME_STR_LEN] = "";
+
+  time_t now = time(NULL);
+  tm *t = localtime(&now);
+
+  strftime(datetime_str, sizeof(datetime_str)-1, "%Y-%m-%d_%H.%M", t);
+
+  snprintf(gv_filename, MAX_FILENAME_LEN, "./%s/%s/graph_dump_%s-L%d-N%lu.gv",
+      LIST_DUMPS_FOLDER,
+      LIST_GV_DUMPS_FOLDER,
+      datetime_str,
+      debug.line_num,
+      *dumps_count
+  );
+
+  snprintf(png_filename, MAX_FILENAME_LEN, "./%s/%s/graph_dump_%s-L%d-N%lu.png",
+      LIST_DUMPS_FOLDER,
+      LIST_PNG_DUMPS_FOLDER,
+      datetime_str,
+      debug.line_num,
+      *dumps_count
+  );
+
+  FILE *dump_file = fopen(gv_filename, "wb");
 
   if (dump_file == NULL) {
     fprintf(stderr, RED("DumpError: can't open dump file\n"));
@@ -21,7 +50,7 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
   fprintf(dump_file,
       "debug_info [\n"
       "shape=record,\n"
-      "label=\"{debug info | { {list name | file name | function name | line number} | {%s | %s | %s | %d} }}\",\n"
+      "label=\"{debug info | { {list name | file name | function name | line number | datetime} | {%s | %s | %s | %d | %s} }}\",\n"
       "fillcolor=white,\n"
       "color=grey,\n"
       "style=\"filled\",\n"
@@ -29,7 +58,8 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
       debug.name,
       debug.file_name,
       debug.func_name,
-      debug.line_num
+      debug.line_num,
+      datetime_str
   );
   fprintf(dump_file,
       "list [\n"
@@ -84,7 +114,15 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
 
   fclose(dump_file);
 
-  system("dot -Tpng graph_dump.gv -o dump.png");
+  char dot_cmd[MAX_CMD_STR_LEN] = "";
+  snprintf(dot_cmd, MAX_CMD_STR_LEN, "dot -Tpng %s -o %s", gv_filename, png_filename);
+
+  system(dot_cmd);
+
+  (*dumps_count)++;
+
+  fprintf(stderr, GREEN("[DUMPED] ") BLACK("gv: %s\n"), gv_filename);
+  fprintf(stderr,       "         "  BLACK("png: %s\n"), png_filename);
 
   return OK;
 }

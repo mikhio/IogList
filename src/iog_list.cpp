@@ -81,10 +81,10 @@ int iog_ListVerify (const IogList_t *list) {
  * @param[in] debug structure with debug info 
  * @return Error code (if ok return IogReturnCode.OK)
  */
-int iog_ListDump (const IogList_t *list, const IogDebugInfo_t debug) {
+int iog_ListDump (const IogList_t *list, const IogDebugInfo_t debug, size_t *dumps_count) {
   IOG_ASSERT(list);
 
-  iog_ListGraphDump(list, debug);
+  iog_ListGraphDump(list, debug, dumps_count);
 
   return OK;
 }

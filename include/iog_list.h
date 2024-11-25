@@ -8,8 +8,8 @@
 /* @file iog_list.h */
 
 /// Macros for dump with debuging info
-#define IOG_LIST_DUMP(list) {                                            \
- iog_ListDump(list, { #list, __FILE__,  __PRETTY_FUNCTION__, __LINE__ }); \
+#define IOG_LIST_DUMP(list, dumps_count) {                                            \
+ iog_ListDump(list, { #list, __FILE__,  __PRETTY_FUNCTION__, __LINE__ }, dumps_count); \
 }
 
 typedef double  IogListData_t;  ///< Definition of list data type
@@ -60,7 +60,7 @@ int iog_ListGetDataLast  (const IogList_t *list, IogListData_t *value);
 IogListId_t iog_ListFirst (const IogList_t *list);
 IogListId_t iog_ListLast  (const IogList_t *list);
 
-int iog_ListDump   (const IogList_t *list, const IogDebugInfo_t debug);
+int iog_ListDump   (const IogList_t *list, const IogDebugInfo_t debug, size_t *dumps_count);
 
 int iog_ListVerify (const IogList_t *list);
 

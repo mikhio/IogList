@@ -6,6 +6,8 @@ BUILD_DIR    := ./build
 APP_PATH     := ./build/iog_list
 CCH_PATH     := ./cpp_cache
 
+DUMPS_DIRS    := ./dumps/gv_dumps ./dumps/png_dumps
+
 SOURCES := $(wildcard $(SRC_PATH)/*.cpp) main.cpp
 OBJECTS := $(addprefix $(CCH_PATH)/, $(patsubst %.cpp, %.o, $(SOURCES)))
 
@@ -40,6 +42,11 @@ $(CCH_PATH)/main.o: main.cpp Makefile
 .PHONY: build
 build: $(APP_PATH)
 
+.PHONY: dumps_clean
+dumps_clean:
+	rm -rf $(DUMPS_DIRS)
+	mkdir -p $(DUMPS_DIRS)
+
 .PHONY: clean
 clean:
 	rm -rf $(CCH_PATH) $(BUILD_DIR)
@@ -47,6 +54,7 @@ clean:
 .PHONY: run
 run:
 	$(APP_PATH)
+
 
 .PHONY: docs
 docs: Doxyfile

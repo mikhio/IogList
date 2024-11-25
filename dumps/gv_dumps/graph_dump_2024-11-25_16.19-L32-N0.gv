@@ -1,0 +1,85 @@
+digraph G {
+debug_info [
+shape=record,
+label="{debug info | { {list name | file name | function name | line number | datetime} | {&list | main.cpp | int main(const int, const char **) | 32 | 2024-11-25_16.19} }}",
+fillcolor=white,
+color=grey,
+style="filled",
+];
+list [
+shape=record,
+label="{list | { {size | capacity | first_elem | last_elem} | {3 | 8 | 1 | 2} }}",
+fillcolor=white,
+color=grey,
+style="filled",
+];
+elem_0 [
+  shape=record,
+  label="{elem_0 | {{data | 13.1} | {next | 2} | {prev | 1}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_1 [
+  shape=record,
+  label="{elem_1 | {{data | 11.1} | {next | 0} | {prev | 2}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_2 [
+  shape=record,
+  label="{elem_2 | {{data | 14.1} | {next | 1} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_3 [
+  shape=record,
+  label="{elem_3 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_4 [
+  shape=record,
+  label="{elem_4 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_5 [
+  shape=record,
+  label="{elem_5 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_6 [
+  shape=record,
+  label="{elem_6 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+elem_7 [
+  shape=record,
+  label="{elem_7 | {{data | 0} | {next | 0} | {prev | 0}}}",
+  fillcolor=white,
+  color=black,
+  style="filled"
+];
+
+elem_1 -> elem_0 [color=black, line=stigh];
+elem_1 -> elem_2 [color=blue];
+elem_1 [fillcolor=lightgrey];
+
+elem_0 -> elem_2 [color=black, line=stigh];
+elem_0 -> elem_1 [color=blue];
+elem_0 [fillcolor=lightgrey];
+
+elem_2 -> elem_1 [color=black, line=stigh];
+elem_2 -> elem_0 [color=blue];
+elem_2 [fillcolor=lightgrey];
+
+}
