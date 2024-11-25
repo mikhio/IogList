@@ -41,8 +41,8 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
       "];\n",
       list->size,
       list->capacity,
-      list->first_elem,
-      list->last_elem
+      iog_ListFirst(list),
+      iog_ListLast(list)
   );
 
   for (int i = 0; i < list->capacity; i++) {
@@ -65,7 +65,7 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
   fprintf(dump_file, "\n");
 
   if (list->size > 1) {
-    for (IogListId_t elem_id = list->first_elem; ; elem_id = list->next[elem_id]) {
+    for (IogListId_t elem_id = iog_ListFirst(list); ; elem_id = list->next[elem_id]) {
       fprintf(dump_file, 
           "elem_%d -> elem_%d [color=black, line=stigh];\n"
           "elem_%d -> elem_%d [color=blue];\n"
@@ -74,7 +74,7 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
           elem_id, list->next[elem_id], elem_id, list->prev[elem_id], elem_id
       );
 
-      if (elem_id == list->last_elem)
+      if (elem_id == iog_ListLast(list))
         break;
     }
   }

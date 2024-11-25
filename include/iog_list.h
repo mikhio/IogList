@@ -33,7 +33,6 @@ struct IogList_t {
   IogListId_t   *prev;        ///< Pointer to array with previous indices
 
   IogListId_t first_elem;     ///< Index of first element
-  IogListId_t last_elem;      ///< Index of last element
                                   
   size_t size;                ///< Amount of valuable elements in list arrays
   size_t capacity;            ///< Size of allocated memory list arrays
@@ -49,13 +48,17 @@ int iog_ListInsertBefore (IogList_t *list, IogListId_t elem_id,  IogListData_t v
 int iog_ListInsertStart  (IogList_t *list, IogListData_t value);
 int iog_ListInsertEnd    (IogList_t *list, IogListData_t value);
 
-int iog_ListGetById      (IogList_t *list, IogListId_t elem_id, IogListData_t *value);
-int iog_ListGetFirst     (IogList_t *list, IogListData_t *value);
-int iog_ListGetLast      (IogList_t *list, IogListData_t *value);
-
 int iog_ListDeleteById   (IogList_t *list, IogListId_t elem_id);
 int iog_ListDeleteFirst  (IogList_t *list);
 int iog_ListDeleteLast   (IogList_t *list);
+
+
+int iog_ListGetDataById  (const IogList_t *list, IogListId_t elem_id, IogListData_t *value);
+int iog_ListGetDataFirst (const IogList_t *list, IogListData_t *value);
+int iog_ListGetDataLast  (const IogList_t *list, IogListData_t *value);
+
+IogListId_t iog_ListFirst (const IogList_t *list);
+IogListId_t iog_ListLast  (const IogList_t *list);
 
 int iog_ListDump   (const IogList_t *list, const IogDebugInfo_t debug);
 

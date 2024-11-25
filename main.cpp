@@ -18,7 +18,7 @@ int main(const int argc, const char *argv[]) {
   iog_ListInsertEnd(&list, 14.1);
 
   IogListData_t value = 0;
-  iog_ListGetLast(&list, &value);
+  iog_ListGetDataLast(&list, &value);
   fprintf(stderr, "value: %lg\n", value);
 
   iog_ListDeleteFirst(&list);
