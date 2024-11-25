@@ -11,17 +11,20 @@ int main(const int argc, const char *argv[]) {
 
   iog_ListInit(&list);
 
-
   iog_ListInsertEnd(&list, 10.1);
+  iog_ListInsertEnd(&list, 11.1);
   iog_ListInsertEnd(&list, 12.1);
-  iog_ListInsertEnd(&list, 15.1);
-  iog_ListInsertEnd(&list, 19.1);
-  iog_ListInsertEnd(&list, 19.1);
+  iog_ListInsertEnd(&list, 13.1);
+  iog_ListInsertEnd(&list, 14.1);
 
-  iog_ListInsertAfter(&list, 1, 20);
-  iog_ListInsertAfter(&list, 1, 30);
-  iog_ListInsertStart(&list, 10);
-  iog_ListInsertBefore(&list, 6, 10);
+  IogListData_t value = 0;
+  iog_ListGetLast(&list, &value);
+  fprintf(stderr, "value: %lg\n", value);
+
+  iog_ListDeleteFirst(&list);
+  iog_ListDeleteFirst(&list);
+  iog_ListDeleteLast(&list);
+  //iog_ListDeleteById(&list, 2);
 
   
   IOG_LIST_DUMP(&list);

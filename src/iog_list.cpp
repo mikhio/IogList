@@ -120,7 +120,7 @@ int iog_ListInsertAfter (IogList_t *list, IogListId_t elem_id, IogListData_t val
 
   list->size++;
 
-  fprintf(stderr, "size: %lu, cap: %lu\n", list->size, list->capacity);
+  fprintf(stderr, BLUE("[INSERT]") " size: %lu, cap: %lu\n", list->size, list->capacity);
 
   return OK;
 }
@@ -129,6 +129,7 @@ int iog_ListInsertBefore (IogList_t *list, IogListId_t elem_id, IogListData_t va
   IOG_ASSERT(iog_ListVerify(list) == OK);
   IOG_ASSERT(elem_id >= 0);
   IOG_ASSERT(elem_id <= list->size);
+  IOG_ASSERT((elem_id == list->size) <= (list->size == 0))
 
   if (list->size == list->capacity) {
     int err = allocate_more(list);
@@ -152,25 +153,97 @@ int iog_ListInsertBefore (IogList_t *list, IogListId_t elem_id, IogListData_t va
 
   list->size++;
 
-  fprintf(stderr, "size: %lu, cap: %lu\n", list->size, list->capacity);
+  fprintf(stderr, BLUE("[INSERT]") " size: %lu, cap: %lu\n", list->size, list->capacity);
 
   return OK;
 }
 
 int iog_ListInsertStart (IogList_t *list, IogListData_t value) {
-  IOG_ASSERT(iog_ListVerify(list) == OK);
+  return iog_ListInsertBefore(list, list->first_elem, value);
+}
 
-  iog_ListInsertBefore(list, list->first_elem, value);
+int iog_ListInsertEnd (IogList_t *list, IogListData_t value) {
+  return iog_ListInsertAfter(list, list->last_elem, value);
+}
+
+int iog_ListGetById (IogList_t *list, IogListId_t elem_id, IogListData_t *value) {
+  IOG_ASSERT(list);
+  IOG_ASSERT(iog_ListVerify(list) == OK);
+  IOG_ASSERT(value);
+
+  if (list->size == 0)
+    return ERR_SIZE_IS_NULL;
+
+  IOG_ASSERT(elem_id >= 0);
+  IOG_ASSERT(elem_id < list->size);
+
+  *value = list->data[elem_id];
 
   return OK;
 }
 
-int iog_ListInsertEnd (IogList_t *list, IogListData_t value) {
+int iog_ListGetFirst (IogList_t *list, IogListData_t *value) {
+  return iog_ListGetById(list, list->first_elem, value);
+}
+
+int iog_ListGetLast (IogList_t *list, IogListData_t *value) {
+  return iog_ListGetById(list, list->last_elem, value);
+}
+
+int iog_ListDeleteById (IogList_t *list, IogListId_t elem_id) {
+  IOG_ASSERT(list);
   IOG_ASSERT(iog_ListVerify(list) == OK);
 
-  iog_ListInsertAfter(list, list->last_elem, value);
+  if (list->size == 0)
+    return ERR_SIZE_IS_NULL;
+
+  IOG_ASSERT(elem_id >= 0);
+  IOG_ASSERT(elem_id < list->size);
+
+  list->prev[list->next[elem_id]] = list->prev[elem_id];
+  list->next[list->prev[elem_id]] = list->next[elem_id];
+
+  if (elem_id == list->first_elem)
+    list->first_elem = list->next[elem_id];
+  if (elem_id == list->last_elem)
+    list->last_elem = list->prev[elem_id];
+
+  
+  /*
+  list->data[elem_id] = list->data[list->size-1];
+  list->next[elem_id] = list->next[list->size-1];
+  list->prev[elem_id] = list->prev[list->size-1];
+
+  if ((list->size-1) == list->last_elem)
+    list->last_elem = elem_id;
+
+  if ((list->size-1) == list->first_elem)
+    list->first_elem = elem_id;
+
+
+  list->data[list->size-1] = 0;
+  list->next[list->size-1] = 0;
+  list->prev[list->size-1] = 0;
+
+  if (list->last_elem == list->size-1)
+    list->last_elem = list->size-2;
+  list->size--;
+  */
+
+  if (list->size <= list->capacity/4)
+    free_rest(list);
+
+  fprintf(stderr, RED("[DELETE]") " size: %lu, cap: %lu\n", list->size, list->capacity);
 
   return OK;
+}
+
+int iog_ListDeleteFirst (IogList_t *list) {
+  return iog_ListDeleteById(list, list->first_elem);
+}
+
+int iog_ListDeleteLast (IogList_t *list) {
+  return iog_ListDeleteById(list, list->last_elem);
 }
 
 

@@ -49,13 +49,13 @@ int iog_ListInsertBefore (IogList_t *list, IogListId_t elem_id,  IogListData_t v
 int iog_ListInsertStart  (IogList_t *list, IogListData_t value);
 int iog_ListInsertEnd    (IogList_t *list, IogListData_t value);
 
+int iog_ListGetById      (IogList_t *list, IogListId_t elem_id, IogListData_t *value);
 int iog_ListGetFirst     (IogList_t *list, IogListData_t *value);
 int iog_ListGetLast      (IogList_t *list, IogListData_t *value);
-int iog_ListGetById      (IogList_t *list, IogListId_t id, IogListData_t *value);
 
+int iog_ListDeleteById   (IogList_t *list, IogListId_t elem_id);
 int iog_ListDeleteFirst  (IogList_t *list);
 int iog_ListDeleteLast   (IogList_t *list);
-int iog_ListDeleteById   (IogList_t *list, IogListId_t id);
 
 int iog_ListDump   (const IogList_t *list, const IogDebugInfo_t debug);
 

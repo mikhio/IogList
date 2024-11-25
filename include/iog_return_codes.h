@@ -25,8 +25,9 @@ enum IogReturnCode {
   ERR_TEST_FAILED            = 10,
 
   ERR_CANT_OPEN_FILE         = 11,
+  ERR_SIZE_IS_NULL           = 12,
 
-  NR_RETURN_CODE             = 12, ///< Last return code
+  NR_RETURN_CODE             = 13, ///< Last return code
 };
 
 #endif // IOG_RETURN_CODES_H

@@ -50,7 +50,7 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
       "elem_%d [\n"
       "  shape=record,\n"
       "  label=\"{elem_%d | {{data | %lg} | {next | %d} | {prev | %d}}}\",\n"
-      "  fillcolor=%s,\n"
+      "  fillcolor=white,\n"
       "  color=black,\n"
       "  style=\"filled\"\n"
       "];\n",
@@ -58,20 +58,24 @@ int iog_ListGraphDump (const IogList_t *list, const IogDebugInfo_t debug) {
       i,
       list->data[i],
       list->next[i],
-      list->prev[i],
-      (i < list->size) ? "lightgrey" : "white"
+      list->prev[i]
     );
   }
 
   fprintf(dump_file, "\n");
 
   if (list->size > 1) {
-    for (int i = 0; i < list->size; i++) {
+    for (IogListId_t elem_id = list->first_elem; ; elem_id = list->next[elem_id]) {
       fprintf(dump_file, 
           "elem_%d -> elem_%d [color=black, line=stigh];\n"
-          "elem_%d -> elem_%d [color=blue];\n",
-          i, list->next[i], i, list->prev[i]
+          "elem_%d -> elem_%d [color=blue];\n"
+          "elem_%d [fillcolor=lightgrey];\n"
+          "\n",
+          elem_id, list->next[elem_id], elem_id, list->prev[elem_id], elem_id
       );
+
+      if (elem_id == list->last_elem)
+        break;
     }
   }
 
