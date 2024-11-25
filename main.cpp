@@ -22,8 +22,8 @@ int main(const int argc, const char *argv[]) {
   fprintf(stderr, "value: %lg\n", value);
 
   iog_ListDeleteFirst(&list);
-  iog_ListDeleteFirst(&list);
-  iog_ListDeleteLast(&list);
+  //iog_ListDeleteFirst(&list);
+  //iog_ListDeleteLast(&list);
   //iog_ListDeleteById(&list, 2);
 
   

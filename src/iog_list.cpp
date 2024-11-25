@@ -157,13 +157,13 @@ int iog_ListDeleteById (IogList_t *list, IogListId_t elem_id) {
     list->first_elem = list->next[elem_id];
 
   
-  /*
   list->data[elem_id] = list->data[list->size-1];
   list->next[elem_id] = list->next[list->size-1];
   list->prev[elem_id] = list->prev[list->size-1];
 
-  if ((list->size-1) == list->last_elem)
-    list->last_elem = elem_id;
+
+  list->prev[list->next[elem_id]] = elem_id;
+  list->next[list->prev[elem_id]] = elem_id;
 
   if ((list->size-1) == list->first_elem)
     list->first_elem = elem_id;
@@ -173,10 +173,7 @@ int iog_ListDeleteById (IogList_t *list, IogListId_t elem_id) {
   list->next[list->size-1] = 0;
   list->prev[list->size-1] = 0;
 
-  if (list->last_elem == list->size-1)
-    list->last_elem = list->size-2;
   list->size--;
-  */
 
   if (list->size <= list->capacity/4)
     free_rest(list);
